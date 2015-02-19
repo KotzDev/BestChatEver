@@ -22,55 +22,31 @@ public class ClientServer extends Thread
     // Strömmar för att läsa/skriva
     private BufferedReader in;
     private PrintWriter out;
-    private String echo; // Printar ut det som vi fångar upp
+    // MISC
+    private String echo;
     private int port;
 
     /**----------------------------------------------------------------
      /*                         CONSTRUCTORS
      //-----------------------------------------------------------------*/
 
-    // Konstrutkor för old.Server
-    public ClientServer(int port){
+    // Constructor for server [BETA]
+    public ClientServer(int port)
+    {
         //Koppla upp servern socket
         try{
             this.port = port;
             serverSocket = new ServerSocket(this.port);
-            System.out.println("A new server up listining on: " + this.port);
+            System.out.println("Server started at " + clientSocket.getInetAddress() + ":"  + this.port);
+            System.out.println("ServerSocket initiated...");
+            System.out.println("Listening for incoming transmissions...\n");
         } catch (Exception e){
-            System.out.println("Could not listen on port or in use: " + this.port);
+            System.out.println("Could not listen on port or currently in use: " + this.port);
             //System.exit(-1);
         }
-        System.out.println("ServerSocket initiated...");
-        System.out.println("Listening for incoming transmissions...\n");
     }
 
-    @Override
-    public void run()
-    {
-       //Lyssna efter klient (när klienten ansluter sätter vi upp Clientsocket)
-        try {
-            System.out.println("Server Awating incoming connections on: " + this.port);
-            clientSocket = serverSocket.accept();
-            //clientSocket = serverSocket.accept();
-            // Vi Skriver ut ip-adressen till som är ansluten klienten
-            System.out.println("Server Connection established: " + clientSocket.getInetAddress());
-
-            Socket so = null;
-            out = new PrintWriter(clientSocket.getOutputStream(), true);
-            //out = new PrintWriter(so.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-
-            ioStream();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Server Accept failed: on port " + this.port);
-            System.exit(-1);
-        }
-        //Ansluter till klienten genom att sätta up IOStream
-    }
-
-    //Konstruktor för old.Client
+    // Constructor for Client [ALPHA]
     public ClientServer(String hostAddress, int port)
     {
         try {
@@ -94,11 +70,37 @@ public class ClientServer extends Thread
      /*                         METHODS
      //-----------------------------------------------------------------*/
 
+    @Override
+    public void run()
+    {
+        //Lyssna efter klient (när klienten ansluter sätter vi upp Clientsocket)
+        try {
+            System.out.println("Server Awating incoming connections on: " + this.port);
+            clientSocket = serverSocket.accept();
+            //clientSocket = serverSocket.accept();
+            // Vi Skriver ut ip-adressen till som är ansluten klienten
+            System.out.println("Server Connection established: " + clientSocket.getInetAddress());
+
+            Socket so = null;
+            out = new PrintWriter(clientSocket.getOutputStream(), true);
+            //out = new PrintWriter(so.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+
+            ioStream();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Server Accept failed: on port " + this.port);
+            System.exit(-1);
+        }
+        //Ansluter till klienten genom att sätta up IOStream
+    }
+
+
     public void ioStream()
     {
         while(true)
         {
-            //System.out.println("While loop initiated until client DC's");
             try {
                 System.out.println("while loop initiated");
                 echo = in.readLine();
@@ -117,21 +119,5 @@ public class ClientServer extends Thread
         }
     }
 
-
-/*
-
-    */
-/**----------------------------------------------------------------
-     */
-/*                         MAIN
-     //-----------------------------------------------------------------*//*
-
-
-    public static void main(String[] args) throws IOException {
-        ClientServer soul = new ClientServer(6868);
-        soul.ioStream();
-    }
-
-*/
 
 }

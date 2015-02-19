@@ -12,7 +12,6 @@ public class IntroWindow extends JFrame {
      //-----------------------------------------------------------------------------*/
 
     private GUI1 myGUI1;
-    //private ClientServer cliServ;
 
     /**-----------------------------------------------------------------------------
      //                           CONSTRUCTOR
