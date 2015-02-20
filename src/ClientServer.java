@@ -24,7 +24,7 @@ public class ClientServer extends Thread
     private PrintWriter out;
     // MISC
     private String echo;
-    private int port;
+    private int port = 5000;
 
     /**----------------------------------------------------------------
      /*                         CONSTRUCTORS
@@ -36,13 +36,11 @@ public class ClientServer extends Thread
         //Koppla upp servern socket
         try{
             this.port = port;
-            serverSocket = new ServerSocket(this.port);
-            System.out.println("Server started at " + clientSocket.getInetAddress() + ":"  + this.port);
+            serverSocket = new ServerSocket(port);
             System.out.println("ServerSocket initiated...");
-            System.out.println("Listening for incoming transmissions...\n");
-        } catch (Exception e){
+        } catch (IOException e){
             System.out.println("Could not listen on port or currently in use: " + this.port);
-            //System.exit(-1);
+            System.exit(-1);
         }
     }
 
@@ -77,13 +75,8 @@ public class ClientServer extends Thread
         try {
             System.out.println("Server Awating incoming connections on: " + this.port);
             clientSocket = serverSocket.accept();
-            //clientSocket = serverSocket.accept();
-            // Vi Skriver ut ip-adressen till som är ansluten klienten
-            System.out.println("Server Connection established: " + clientSocket.getInetAddress());
-
-            Socket so = null;
+            System.out.println("Server Connection established: " + clientSocket.getInetAddress() + ":"  + this.port);
             out = new PrintWriter(clientSocket.getOutputStream(), true);
-            //out = new PrintWriter(so.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
             ioStream();
@@ -93,7 +86,6 @@ public class ClientServer extends Thread
             System.out.println("Server Accept failed: on port " + this.port);
             System.exit(-1);
         }
-        //Ansluter till klienten genom att sätta up IOStream
     }
 
 
@@ -102,7 +94,7 @@ public class ClientServer extends Thread
         while(true)
         {
             try {
-                System.out.println("while loop initiated");
+                System.out.println("while loop initiated in Server Class");
                 echo = in.readLine();
                 if (echo == null) {
                     System.out.println("Client has disconnected");

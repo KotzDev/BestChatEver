@@ -48,7 +48,7 @@ public class GUI1 extends JPanel {
         ButtonClient.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-        new ClientDemo("169.254.123.39", 5000).start();
+        new ClientDemo("169.254.123.92", 5000).start();
         System.out.println("Client Click");
             }
         });

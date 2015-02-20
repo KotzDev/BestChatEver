@@ -36,7 +36,6 @@ public class ClientDemo extends Thread {
 			this.HostIP = HostIP;
 			this.port = Port;
 
-
 			clientSocket = new Socket(HostIP, this.port);
 			out = new PrintWriter(clientSocket.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(
