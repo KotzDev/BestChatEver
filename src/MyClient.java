@@ -1,5 +1,3 @@
-package Exempel;
-
 import java.io.*;
 import java.net.*;
 

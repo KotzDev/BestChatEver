@@ -3,11 +3,11 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-import Exempel.MyClient;
+//import MyClient;
 import com.sun.corba.se.spi.activation.Server;
 
 /**
- * Created by sydney.wojnach on 2015-02-19.
+ * First screen thingy
  */
 public class GUI1 extends JPanel {
 
@@ -49,7 +49,7 @@ public class GUI1 extends JPanel {
         ButtonClient.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-        new MyClient("169.254.123.59", 5000).start();
+        new MyClient("130.229.183.200", 5000).start();
         System.out.println("Client Click");
             }
         });
