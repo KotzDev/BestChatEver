@@ -9,7 +9,7 @@ import java.net.UnknownHostException;
 /**
  * Created by sydney.wojnach on 2015-02-19.
  */
-public class ClientServer extends Thread
+public class MyServer extends Thread
 {
 
      /**----------------------------------------------------------------
@@ -31,7 +31,7 @@ public class ClientServer extends Thread
      //-----------------------------------------------------------------*/
 
     // Constructor for server [BETA]
-    public ClientServer(int port)
+    public MyServer(int port)
     {
         //Koppla upp servern socket
         try{
@@ -44,8 +44,8 @@ public class ClientServer extends Thread
         }
     }
 
-    // Constructor for Client [ALPHA]
-    public ClientServer(String hostAddress, int port)
+    // Constructor for Client [ALPHA] - not being used ATM.
+    public MyServer(String hostAddress, int port)
     {
         try {
             clientSocket = new Socket(hostAddress, 4444);
@@ -88,6 +88,7 @@ public class ClientServer extends Thread
         }
     }
 
+    //TODO Vi måste lägga till lite kod här men ja nu vet.
 
     public void ioStream()
     {
@@ -101,7 +102,6 @@ public class ClientServer extends Thread
                     System.exit(1);
                 }
                 System.out.println("Received: " + echo);
-                //out.flush();
                 //out.println(echo.toUpperCase());
 
             } catch(IOException e){

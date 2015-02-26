@@ -1,16 +1,9 @@
 import javax.swing.*;
-import javax.swing.plaf.DimensionUIResource;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Random;
 
-import Exempel.ClientDemo;
+import Exempel.MyClient;
 import com.sun.corba.se.spi.activation.Server;
 
 /**
@@ -21,7 +14,7 @@ public class GUI1 extends JPanel {
     /**-----------------------------------------------------------------------------
      /*                           GLOBAL VARIABLES
      //-----------------------------------------------------------------------------*/
-        private ClientServer cliServ;
+        private Server cliServ;
         //private JCheckBoxMenuItem myCheckBoxes;
         private JButton myButton;
         private JButton ButtonClient;
@@ -31,7 +24,8 @@ public class GUI1 extends JPanel {
 
     public GUI1()
     {
-        setPreferredSize(new Dimension(410,410));
+        //TODO: Måste lägga till Jtxtfields för port, ip, osv.
+        setPreferredSize(new Dimension(200,400));
 
         myButton = new JButton("START SERVER");
         add(myButton);
@@ -39,7 +33,7 @@ public class GUI1 extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
         System.out.println("Server Click");
-        new ClientServer(5000).start();
+        new MyServer(5000).start();
             }
         });
 
@@ -48,7 +42,7 @@ public class GUI1 extends JPanel {
         ButtonClient.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-        new ClientDemo("169.254.123.92", 5000).start();
+        new MyClient("169.254.123.92", 5000).start();
         System.out.println("Client Click");
             }
         });
@@ -62,9 +56,8 @@ public class GUI1 extends JPanel {
 
     public void checkBoxes()
     {
-        /**
-         * Vi lägger till detta senare..
-         */
+
+        //TODO: Det ska vara checkboxes istället för knappar.
     }
 
 }

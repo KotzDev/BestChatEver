@@ -10,7 +10,7 @@ import java.net.*;
  * skriva ut serverns svar. Programmet fortsätter tills
  * de avbryts utifrån.
  */
-public class ClientDemo extends Thread {
+public class MyClient extends Thread {
 
 
 	/**-----------------------------------------------------------------------------
@@ -31,7 +31,7 @@ public class ClientDemo extends Thread {
 	 //-----------------------------------------------------------------------------*/
 
 
-	public ClientDemo(String HostIP, int Port) {
+	public MyClient(String HostIP, int Port) {
 		try {
 			this.HostIP = HostIP;
 			this.port = Port;
