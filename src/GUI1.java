@@ -18,6 +18,8 @@ public class GUI1 extends JPanel {
         //private JCheckBoxMenuItem myCheckBoxes;
         private JButton myButton;
         private JButton ButtonClient;
+        private JTextField portField;
+        private JLabel portlabel;
     /**-----------------------------------------------------------------------------
      //                           CONSTRUCTOR
      //-----------------------------------------------------------------------------*/
@@ -28,12 +30,17 @@ public class GUI1 extends JPanel {
         setPreferredSize(new Dimension(200,400));
 
         myButton = new JButton("START SERVER");
+        portField = new JTextField(5);
+        portlabel = new JLabel();
+        portlabel.setText("Ange server port");
+        add(portlabel);
+        add(portField);
         add(myButton);
         myButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-        System.out.println("Server Click");
-        new MyServer(5000).start();
+                System.out.println("Server Click");
+                new MyServer(5000).start();
             }
         });
 
@@ -42,7 +49,7 @@ public class GUI1 extends JPanel {
         ButtonClient.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-        new MyClient("169.254.123.92", 5000).start();
+        new MyClient("169.254.123.59", 5000).start();
         System.out.println("Client Click");
             }
         });

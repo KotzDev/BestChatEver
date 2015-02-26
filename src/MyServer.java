@@ -25,6 +25,8 @@ public class MyServer extends Thread
     // MISC
     private String echo;
     private int port = 5000;
+    // GUI STUFF
+    private ChatWindow myChatWindow;
 
     /**----------------------------------------------------------------
      /*                         CONSTRUCTORS
@@ -78,7 +80,7 @@ public class MyServer extends Thread
             System.out.println("Server Connection established: " + clientSocket.getInetAddress() + ":"  + this.port);
             out = new PrintWriter(clientSocket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-
+            myChatWindow = new ChatWindow();
             ioStream();
 
         } catch (Exception e) {
