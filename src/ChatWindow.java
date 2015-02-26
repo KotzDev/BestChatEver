@@ -16,9 +16,9 @@ public class ChatWindow extends JFrame {
      //                           CONSTRUCTOR
      //-----------------------------------------------------------------------------*/
 
-    public ChatWindow()
+    public ChatWindow(String name)
     {
-        myGUI2 = new GUI2();
+        myGUI2 = new GUI2(name);
         add(myGUI2);
         pack();
         setVisible(true);

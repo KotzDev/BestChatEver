@@ -18,28 +18,31 @@ public class GUI2 extends JPanel{
     private JTextArea myTextArea;
     private JScrollPane myScrollpane;
     private String msg;
-    private JLabel name;
+    private JLabel namelabel;
+    private String name;
     private final static String newline = "\n";
 
     /**-----------------------------------------------------------------------------
      //                           CONSTRUCTOR
      //-----------------------------------------------------------------------------*/
 
-    public GUI2()
+    public GUI2(String name)
     {
         setPreferredSize(new Dimension(400,400));
         sendButton = new JButton("SEND");
         colorPicker = new JButton("Pick a color");
-
+        namelabel = new JLabel();
+        namelabel.setText(name);
         myTextArea = new JTextArea();
         myTextArea.setText("AMMMAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD\nsds\n");
-        myTextArea.setColumns(30);
+        myTextArea.setColumns(35);
         myTextArea.setRows(20);
         myTextArea.setLineWrap(true);
         myTextArea.setWrapStyleWord(true);
         myTextArea.setEditable(false);
         myScrollpane = new JScrollPane(myTextArea);
         add(myTextArea);
+        add(myScrollpane);
         //TODO: Lägg till actionlistern på knappen(Hämta från GUI1)
         //TODO: Starta sedan "logger" classen."
         sendField = new JTextField();
@@ -63,6 +66,7 @@ public class GUI2 extends JPanel{
                 System.out.println("sending msg to server");
             }
         });
+        add(namelabel);
         add(sendField);
         add(colorPicker);
         add(sendButton);

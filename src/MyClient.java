@@ -1,4 +1,3 @@
-package Exempel;
 
 import java.io.*;
 import java.net.*;
@@ -25,13 +24,15 @@ public class MyClient extends Thread {
 	BufferedReader in = null;
 	BufferedReader stdIn;
 	String userInput;
+	private ChatWindow myChatWindow;
+
 
 	/**-----------------------------------------------------------------------------
 	 //                           CONSTRUCTOR
 	 //-----------------------------------------------------------------------------*/
 
 
-	public MyClient(String HostIP, int Port) {
+	public MyClient(String HostIP, int Port, String NAME) {
 		try {
 			this.HostIP = HostIP;
 			this.port = Port;
@@ -41,7 +42,7 @@ public class MyClient extends Thread {
 			in = new BufferedReader(new InputStreamReader(
 					clientSocket.getInputStream()));
 			System.out.println("Client connected to " + this.HostIP + " on port " + this.port);
-			//myChatWindow = new ChatWindow(); lägg till den här sen när det fungerar.
+			myChatWindow = new ChatWindow(NAME);
 
 		} catch (Exception E) {
 			E.printStackTrace();

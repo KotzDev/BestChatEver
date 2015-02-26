@@ -2,8 +2,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
-import Exempel.MyClient;
 import com.sun.corba.se.spi.activation.Server;
 
 /**
@@ -17,67 +19,122 @@ public class GUI1 extends JPanel {
         private Server cliServ;
         //private JCheckBoxMenuItem myCheckBoxes;
         private JButton myServerButton;
-        private JButton ButtonClient;
-        private JTextField portField;
-        private JTextField nameField;
-        private JLabel portlabel;
-        private JLabel namelabel;
-        private String port;
-        private String name;
+        private JButton myClientButton;
+
+        private JTextField clientPortField;
+        private JTextField serverPortField;
+        private JTextField serverNameField;
+        private JTextField clientNameField;
+        private JTextField hostIPField;
+
+        private JLabel serverNameLabel;
+        private JLabel clientNameLabel;
+        private JLabel serverPortLabel;
+        private JLabel clientPortLabel;
+        private JLabel hostIPLabel;
+
+        private String serverPort;
+        private String clientPort;
+        private String serverName;
+        private String clientName;
+        private String hostIP;
+
+        private JTextArea console;
+        private JScrollPane consoleScrollPane;
+
     /**-----------------------------------------------------------------------------
      //                           CONSTRUCTOR
      //-----------------------------------------------------------------------------*/
 
     public GUI1()
     {
-        //TODO: Måste lägga till Jtxtfields för port, ip, osv.
         setPreferredSize(new Dimension(200,400));
 
         myServerButton = new JButton("START SERVER");
-        portField = new JTextField(5);
-        nameField = new JTextField(5);
-        nameField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                name = nameField.getText();
-                portField.selectAll();
-            }
-        });
-        portField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                port = portField.getText();
-                portField.selectAll();
-            }
-        });
-        portlabel = new JLabel();
-        portlabel.setText("Ange server port");
-        namelabel = new JLabel();
-        namelabel.setText("Ange Namn");
-        add(namelabel);
-        add(nameField);
-        add(portlabel);
-        add(portField);
-        add(myServerButton);
         myServerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Server Click");
-                new MyServer(Integer.parseInt(port),name).start();
+                new MyServer(Integer.parseInt(serverPort), serverName).start();
+            }
+        });
+        myClientButton = new JButton("START CLIENT");
+        myClientButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new MyClient("169.254.123.59", Integer.parseInt(clientPort), clientName).start();
+                System.out.println("Client Click");
             }
         });
 
-        ButtonClient = new JButton("START CLIENT");
-        add(ButtonClient);
-        ButtonClient.addActionListener(new ActionListener() {
+        serverPortField = new JTextField(8);
+        serverPortField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-        new MyClient("169.254.123.59", 5000).start();
-        System.out.println("Client Click");
+                serverPort = serverPortField.getText();
             }
         });
+        clientPortField = new JTextField(8);
+        clientPortField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                clientPort = clientPortField.getText();
+            }
+        });
+        serverNameField = new JTextField(8);
+        serverNameField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                serverName = serverNameField.getText();
+            }
+        });
+        clientNameField = new JTextField(8);
+        clientNameField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                clientName = clientNameField.getText();
+            }
+        });
+
+
+        serverPortLabel = new JLabel();
+        serverPortLabel.setText("Incoming Port");
+        clientPortLabel = new JLabel();
+        clientPortLabel.setText("Outgoing Port");
+        serverNameLabel = new JLabel();
+        serverNameLabel.setText("Server Name");
+        clientNameLabel = new JLabel();
+        clientNameLabel.setText("Client Name");
+/*
+        console = new JTextArea();
+        console.setColumns(10);
+        console.setRows(10);
+        console.setLineWrap(true);
+        console.setWrapStyleWord(true);
+        console.setEditable(false);
+        consoleScrollPane = new JScrollPane(console);
+
+        try {
+            console.read(new InputStreamReader(System.in), null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+*/
+
+        add(myServerButton);
+        add(serverNameLabel);
+        add(serverNameField);
+        add(serverPortLabel);
+        add(serverPortField);
+
+        add(myClientButton);
+        add(clientNameLabel);
+        add(clientNameField);
+        add(clientPortLabel);
+        add(clientPortField);
+
+        //add(console);
+
 
     }//End of constructor
 
