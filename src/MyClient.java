@@ -40,8 +40,9 @@ public class MyClient extends Thread {
 			out = new PrintWriter(clientSocket.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(
 					clientSocket.getInputStream()));
-
 			System.out.println("Client connected to " + this.HostIP + " on port " + this.port);
+			//myChatWindow = new ChatWindow(); lägg till den här sen när det fungerar.
+
 		} catch (Exception E) {
 			E.printStackTrace();
 		}

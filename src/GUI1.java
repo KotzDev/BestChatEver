@@ -16,10 +16,14 @@ public class GUI1 extends JPanel {
      //-----------------------------------------------------------------------------*/
         private Server cliServ;
         //private JCheckBoxMenuItem myCheckBoxes;
-        private JButton myButton;
+        private JButton myServerButton;
         private JButton ButtonClient;
         private JTextField portField;
+        private JTextField nameField;
         private JLabel portlabel;
+        private JLabel namelabel;
+        private String port;
+        private String name;
     /**-----------------------------------------------------------------------------
      //                           CONSTRUCTOR
      //-----------------------------------------------------------------------------*/
@@ -29,18 +33,39 @@ public class GUI1 extends JPanel {
         //TODO: Måste lägga till Jtxtfields för port, ip, osv.
         setPreferredSize(new Dimension(200,400));
 
-        myButton = new JButton("START SERVER");
+        myServerButton = new JButton("START SERVER");
         portField = new JTextField(5);
+        nameField = new JTextField(5);
+        nameField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                name = nameField.getText();
+                portField.selectAll();
+            }
+        });
+        portField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                port = portField.getText();
+                portField.selectAll();
+            }
+        });
         portlabel = new JLabel();
         portlabel.setText("Ange server port");
+        namelabel = new JLabel();
+        namelabel.setText("Ange Namn");
+        add(namelabel);
+        add(nameField);
         add(portlabel);
         add(portField);
-        add(myButton);
-        myButton.addActionListener(new ActionListener() {
+        add(myServerButton);
+        myServerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Server Click");
-                new MyServer(5000).start();
+                new MyServer(Integer.parseInt(port),name).start();
             }
         });
 

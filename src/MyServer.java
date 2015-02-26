@@ -33,7 +33,7 @@ public class MyServer extends Thread
      //-----------------------------------------------------------------*/
 
     // Constructor for server [BETA]
-    public MyServer(int port)
+    public MyServer(int port, String name)
     {
         //Koppla upp servern socket
         try{
