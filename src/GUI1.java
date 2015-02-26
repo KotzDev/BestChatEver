@@ -6,10 +6,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+<<<<<<< HEAD
+=======
+//import MyClient;
+>>>>>>> origin/master
 import com.sun.corba.se.spi.activation.Server;
 
 /**
- * Created by sydney.wojnach on 2015-02-19.
+ * First screen thingy
  */
 public class GUI1 extends JPanel {
 
@@ -92,7 +96,12 @@ public class GUI1 extends JPanel {
         clientNameField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+<<<<<<< HEAD
                 clientName = clientNameField.getText();
+=======
+        new MyClient("130.229.183.200", 5000).start();
+        System.out.println("Client Click");
+>>>>>>> origin/master
             }
         });
 
