@@ -43,7 +43,7 @@ public class xmlLib {
     /**Checks if the message root tag is ok*/
     public static boolean checkMsg(String inMsg){
         return inMsg.startsWith("<message") && inMsg.endsWith("</message>");
-        //TODO check for broken tags, not only start
+        //TODO check for broken tags, not only start?
     }
 
     /**Replaces xml syntax in msg text*/
@@ -57,7 +57,7 @@ public class xmlLib {
     }
 
     /**Creates the XML formatted string to send*/
-    public static String createXML(String msg, String name, String color){ //TODO express color properly?
+    public static String createXML(String msg, String name, String color){
         msg = replaceXMLchars(msg); //replace possible xml syntax in the message body
         return  "<message sender=" + '"'+ name + '"' + "> <text color=" + '"' + color + '"' + ">" + '"' + msg + '"' + " </text> </message>";
     }

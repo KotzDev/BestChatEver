@@ -127,7 +127,7 @@ public class GUI2 extends JPanel implements Runnable{
         chatLogText += "<br>" + xmlLib.getLogText(inMsg, user, inColor);
 
         chatLog.setText(chatLogText+"</body></html>");
-        System.out.println(chatLogText);
+        //System.out.println(chatLogText);
 
         //chatLog.setCaret(chatLog.);   //scroll bs
     }
