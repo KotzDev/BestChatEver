@@ -46,7 +46,7 @@ public class MyServer extends Thread
             System.out.println("Server Connection established: " + clientSocket.getInetAddress() + ":"  + this.port);
             output = new ObjectOutputStream(clientSocket.getOutputStream()); //used for sending stuff
             input =  new ObjectInputStream(clientSocket.getInputStream()); //used for reciving stuff
-            System.out.println("\n Streams are setup - starting chatwindow. /dance \n ");
+            System.out.println("Streams are setup - starting chatwindow. \n/dance");
             myChatWindow = new ChatWindow(this.name,output,input);
 
         } catch (Exception e) {
