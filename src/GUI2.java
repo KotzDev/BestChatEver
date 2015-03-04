@@ -9,7 +9,7 @@ import java.io.ObjectOutputStream;
 /**
  * The actual chat window
  */
-public class GUI2 extends JPanel{
+public class GUI2 extends JPanel implements Runnable{
 
     /**-----------------------------------------------------------------------------
      /*                           GLOBAL VARIABLES
@@ -35,8 +35,8 @@ public class GUI2 extends JPanel{
     public GUI2(String name, ObjectOutputStream o, ObjectInputStream i)
     {
 
-        input = i;      //Input = the "input" from the constructor
-        output = o;     //Output = the "Output" from the constructor
+        input = i;      //Input = the "input" from the constructor (//receive stuff)
+        output = o;     //Output = the "Output" from the constructor (//Send stuff)
 
         setPreferredSize(new Dimension(400,400));
         sendButton = new JButton("SEND");
@@ -62,7 +62,6 @@ public class GUI2 extends JPanel{
             public void actionPerformed(ActionEvent e) {
                 msg = sendField.getText();
                 sendField.setText("");
-
                 myTextArea.append(msg + newline);
 
                 //TODO: Nu ska den skicka till XMLlib
@@ -74,8 +73,11 @@ public class GUI2 extends JPanel{
             @Override
             public void actionPerformed(ActionEvent e) {
 
-            //TODO: skicka msg från sendfield till server.
-                System.out.println("sending msg to server");
+                sendMsg(msg);
+
+            //TODO: skicka msg från sendfield via IOSTREAMS
+                //TODO: Här kommer vi använda IO STREAMS, eventuellt metoderna nedan.
+                System.out.println("sending msg via socket");
             }
         });
         colorPicker.addActionListener(new ActionListener() {
@@ -90,6 +92,7 @@ public class GUI2 extends JPanel{
         add(sendField);
         add(colorPicker);
         add(sendButton);
+
 
     } // end of constructor
 
@@ -123,10 +126,22 @@ public class GUI2 extends JPanel{
             {
                 output.writeObject(name +" - " +msg);
                 output.flush();
+                System.out.println("We just pushed the recorded msg thru the tube!");
                 //Showmessage("\n"+name+" - " + msg);
             }catch(IOException ioException)
             {
                 System.out.println("can't send that message");
             }
         }
+
+    @Override
+    public void run() {
+
+
+        try {
+            this.whileChatting();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

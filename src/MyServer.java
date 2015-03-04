@@ -84,7 +84,7 @@ public class MyServer extends Thread
             //in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             output = new ObjectOutputStream(clientSocket.getOutputStream()); //Send stuff
             input =  new ObjectInputStream(clientSocket.getInputStream()); //receive stuff
-            System.out.println("\n The streams are not setup \n ");
+            System.out.println("\n Streams are setup - going to starting chatwindow. \n ");
 
             myChatWindow = new ChatWindow(name,output,input);
             // IOSTREAMS har blivit flyttade till GUI2
