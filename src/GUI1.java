@@ -44,10 +44,7 @@ public class GUI1 extends JPanel {
         private JTextArea console;
         private JScrollPane consoleScrollPane;
 
-    /**-----------------------------------------------------------------------------
-     //                           CONSTRUCTOR
-     //-----------------------------------------------------------------------------*/
-
+    /**Constructor*/
     public GUI1()
     {
         setPreferredSize(new Dimension(140,400));

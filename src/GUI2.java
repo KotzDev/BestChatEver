@@ -26,14 +26,12 @@ public class GUI2 extends JPanel implements Runnable{
     private final static String newline = "\n";
     private ObjectInputStream input;
     private ObjectOutputStream output;
-    private Color chatColor = Color.black;
+    private String chatColor = "#000000";
     private JEditorPane chatLog;
     private String chatLogText = "<p>this is bullshit<p>";
 
-    /**-----------------------------------------------------------------------------
-     //                           CONSTRUCTOR
-     //-----------------------------------------------------------------------------*/
 
+    /**Constructor*/
     public GUI2(String name, ObjectOutputStream o, ObjectInputStream i)
     {
 
@@ -45,17 +43,10 @@ public class GUI2 extends JPanel implements Runnable{
         colorPicker = new JButton("Pick a color");
         namelabel = new JLabel();
         chatLog = new JEditorPane();
-        //myTextArea = new JTextArea();
-        //myTextArea.setText("AMMMAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD\nsds\n");
         chatLog.setPreferredSize(new Dimension(350, 350));
         chatLog.setContentType("text/html");
-        //myTextArea.setRows(20);
-        //myTextArea.setLineWrap(true);
-        //myTextArea.setWrapStyleWord(true);
-        //myTextArea.setEditable(false);
         add(new JScrollPane(chatLog));
         chatLog.setText(chatLogText);
-        //add(new JScrollPane(myTextArea));
 
         //TODO: Lägg till actionlistern på knappen(Hämta från GUI1)
         //TODO: Starta sedan "logger" classen."
@@ -66,8 +57,6 @@ public class GUI2 extends JPanel implements Runnable{
             public void actionPerformed(ActionEvent e) {
                 msg = sendField.getText();
                 sendField.setText("");
-
-                //myTextArea.append(msg + newline);
                 chatLog.setText(msg + newline);
                 myTextArea.append(msg + newline);
 
@@ -82,7 +71,7 @@ public class GUI2 extends JPanel implements Runnable{
 
                 sendMsg(msg);
 
-            //TODO: skicka msg från sendfield via IOSTREAMS
+                //TODO: skicka msg från sendfield via IOSTREAMS
                 //TODO: Här kommer vi använda IO STREAMS, eventuellt metoderna nedan.
                 System.out.println("sending msg via socket");
             }
@@ -90,17 +79,15 @@ public class GUI2 extends JPanel implements Runnable{
         colorPicker.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                chatColor = JColorChooser.showDialog(null,"Pick a color", null);//TODO convert to hex here?!?!?
-
+                chatColor = xmlLib.color2HexString(JColorChooser.showDialog(null,"Pick a color", null));
+                System.out.println(chatColor);
             }
         });
         add(namelabel);
         add(sendField);
         add(colorPicker);
         add(sendButton);
-
-
-    } // end of constructor
+    }
 
 
     /**-----------------------------------------------------------------------------
