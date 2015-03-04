@@ -7,42 +7,35 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 /**
- * The actual chat window
+ * The actual chat window used by both client and server
  */
 public class GUI2 extends JPanel implements Runnable{
 
-    /**-----------------------------------------------------------------------------
-     /*                           GLOBAL VARIABLES
-     //-----------------------------------------------------------------------------*/
-
+    // THE BUTTONS
     private JButton sendButton;
     private JButton colorPicker;
+    private JButton disconnectButton;
+    // STUFF USED IN GUI2
     private JTextField sendField;
-    private JScrollPane myScrollpane;
-    private String msg;
+    private JEditorPane chatLog;
+    private Color tempColor = Color.black; // Setting default color to black in casse we don't choose any color from the color picker.
     private JLabel namelabel;
+    private String chatColor = "#000000";
     private String name;
-    private final static String newline = "\n";
+    private String chatLogText = "<html><body><p>Chat Time!<p>";
+    //IOSTREAMS
     private ObjectInputStream input;
     private ObjectOutputStream output;
-    private String chatColor = "#000000";
-    Color tempColor = Color.black;
-    private JEditorPane chatLog;
-    private String chatLogText = "<html><body><p>Chat Time!<p>";
 
 
-    /**Constructor*/
+    /**The GUI2 Constructor*/
     public GUI2(String name, ObjectOutputStream o, ObjectInputStream i)
     {
-
         input = i;      //Input = the "input" from the constructor (//receive stuff)
         output = o;     //Output = the "Output" from the constructor (//Send stuff)
-
         setPreferredSize(new Dimension(450,450));
-        sendButton = new JButton("SEND");
-        colorPicker = new JButton("Pick a color");
-        namelabel = new JLabel(name);
         this.name = name;
+        namelabel = new JLabel(name);
         chatLog = new JEditorPane();
         chatLog.setPreferredSize(new Dimension(440, 350));
         chatLog.setContentType("text/html");
@@ -52,20 +45,31 @@ public class GUI2 extends JPanel implements Runnable{
         add(scrollPane);
         chatLog.setText(chatLogText);
 
-        sendField = new JTextField();
-        sendField.setColumns(30);
-        sendField.addActionListener(new ActionListener() {  //enter
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                sendMsg(sendField.getText());
-            }
-        });
+
+        sendButton = new JButton("SEND");
         sendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {    //click
                 sendMsg(sendField.getText());
             }
         });
+
+        disconnectButton = new JButton("Disconnect");
+        disconnectButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                sendMsg("has disconnected... GLHF");
+                try {
+                    output.close();
+                    input.close();
+                    //System.exit(-1);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
+
+        colorPicker = new JButton("Pick a color");
         colorPicker.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -76,10 +80,21 @@ public class GUI2 extends JPanel implements Runnable{
 
 
         });
+
+        sendField = new JTextField();
+        sendField.setColumns(30);
+        sendField.addActionListener(new ActionListener() {  //enter
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                sendMsg(sendField.getText());
+            }
+        });
+
         add(namelabel);
         add(sendField);
         add(colorPicker);
         add(sendButton);
+        add(disconnectButton);
     }
     private void whileChatting()throws IOException {
         String message = "You are now connected";
@@ -90,7 +105,6 @@ public class GUI2 extends JPanel implements Runnable{
             {
                 message = (String) input.readObject();
                 recieveMsg(message);
-                //addMsgToLog(xmlLib.getMsg(message),xmlLib.findUser(message), xmlLib.findColor(message));
             }catch(ClassNotFoundException classNotFoundException)
             {
                 System.out.println("\n msg from the other dude/dudette is unreadable");
