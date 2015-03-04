@@ -2,6 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 /**
  * Created by sydney.wojnach on 2015-02-26.
@@ -21,13 +24,19 @@ public class GUI2 extends JPanel{
     private JLabel namelabel;
     private String name;
     private final static String newline = "\n";
+    private ObjectInputStream input;
+    private ObjectOutputStream output;
 
     /**-----------------------------------------------------------------------------
      //                           CONSTRUCTOR
      //-----------------------------------------------------------------------------*/
 
-    public GUI2(String name)
+    public GUI2(String name, ObjectOutputStream o, ObjectInputStream i)
     {
+
+        input = i;      //Input = the "input" from the constructor
+        output = o;     //Output = the "Output" from the constructor
+
         setPreferredSize(new Dimension(400,400));
         sendButton = new JButton("SEND");
         colorPicker = new JButton("Pick a color");
@@ -40,9 +49,9 @@ public class GUI2 extends JPanel{
         myTextArea.setLineWrap(true);
         myTextArea.setWrapStyleWord(true);
         myTextArea.setEditable(false);
-        myScrollpane = new JScrollPane(myTextArea);
-        add(myTextArea);
-        add(myScrollpane);
+
+        add(new JScrollPane(myTextArea));
+
         //TODO: Lägg till actionlistern på knappen(Hämta från GUI1)
         //TODO: Starta sedan "logger" classen."
         sendField = new JTextField();
@@ -51,6 +60,8 @@ public class GUI2 extends JPanel{
             @Override
             public void actionPerformed(ActionEvent e) {
                 msg = sendField.getText();
+                sendField.setText("");
+
                 myTextArea.append(msg + newline);
 
                 //TODO: Nu ska den skicka till XMLlib
@@ -80,4 +91,33 @@ public class GUI2 extends JPanel{
 
 
 
+        private void whileChatting()throws IOException
+        {
+            String message = "You are now connected";
+            sendMsg(message);
+            do
+            {
+                try
+                {
+                    message = (String) input.readObject();
+                    sendMsg("\n" + message);
+                }catch(ClassNotFoundException classNotFoundException)
+                {
+                    System.out.println("\n idk wtf that user sent!");
+                }
+            }while(!message.equals("END"));
+        }
+
+        private void sendMsg(String msg)
+        {
+            try
+            {
+                output.writeObject(name +" - " +msg);
+                output.flush();
+                //Showmessage("\n"+name+" - " + msg);
+            }catch(IOException ioException)
+            {
+                System.out.println("can't send that message");
+            }
+        }
 }

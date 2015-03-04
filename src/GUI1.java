@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -6,10 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-<<<<<<< HEAD
-=======
-//import MyClient;
->>>>>>> origin/master
+
 import com.sun.corba.se.spi.activation.Server;
 
 /**
@@ -52,7 +50,7 @@ public class GUI1 extends JPanel {
 
     public GUI1()
     {
-        setPreferredSize(new Dimension(200,400));
+        setPreferredSize(new Dimension(140,400));
 
         myServerButton = new JButton("START SERVER");
         myServerButton.addActionListener(new ActionListener() {
@@ -62,11 +60,11 @@ public class GUI1 extends JPanel {
                 new MyServer(Integer.parseInt(serverPort), serverName).start();
             }
         });
-        myClientButton = new JButton("START CLIENT");
+        myClientButton = new JButton("START CLIENT ");
         myClientButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new MyClient("169.254.123.59", Integer.parseInt(clientPort), clientName).start();
+                new MyClient("169.254.123.249", Integer.parseInt(clientPort), clientName).start();
                 System.out.println("Client Click");
             }
         });
@@ -96,12 +94,7 @@ public class GUI1 extends JPanel {
         clientNameField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-<<<<<<< HEAD
                 clientName = clientNameField.getText();
-=======
-        new MyClient("130.229.183.200", 5000).start();
-        System.out.println("Client Click");
->>>>>>> origin/master
             }
         });
 

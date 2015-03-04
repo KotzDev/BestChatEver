@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/master
 import java.io.*;
 import java.net.*;
 
@@ -45,7 +42,7 @@ public class MyClient extends Thread {
 			in = new BufferedReader(new InputStreamReader(
 					clientSocket.getInputStream()));
 			System.out.println("Client connected to " + this.HostIP + " on port " + this.port);
-			myChatWindow = new ChatWindow(NAME);
+			//myChatWindow = new ChatWindow(NAME, output, input);
 
 		} catch (Exception E) {
 			E.printStackTrace();

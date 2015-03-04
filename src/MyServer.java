@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -22,6 +19,9 @@ public class MyServer extends Thread
     // Strömmar för att läsa/skriva
     private BufferedReader in;
     private PrintWriter out;
+    // Eller
+    private ObjectOutputStream output;
+    private ObjectInputStream input;
     // MISC
     private String echo;
     private int port = 5000;
@@ -80,9 +80,14 @@ public class MyServer extends Thread
             System.out.println("Server Awating incoming connections on: " + this.port);
             clientSocket = serverSocket.accept();
             System.out.println("Server Connection established: " + clientSocket.getInetAddress() + ":"  + this.port);
-            out = new PrintWriter(clientSocket.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            myChatWindow = new ChatWindow(name);
+            //out = new PrintWriter(clientSocket.getOutputStream(), true);
+            //in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            output = new ObjectOutputStream(clientSocket.getOutputStream()); //Send stuff
+            input =  new ObjectInputStream(clientSocket.getInputStream()); //receive stuff
+            System.out.println("\n The streams are not setup \n ");
+
+            myChatWindow = new ChatWindow(name,output,input);
+
             ioStream();
 
         } catch (Exception e) {
@@ -92,7 +97,6 @@ public class MyServer extends Thread
         }
     }
 
-    //TODO Vi måste lägga till lite kod här men ja nu vet.
 
     public void ioStream()
     {
@@ -115,5 +119,55 @@ public class MyServer extends Thread
         }
     }
 
+    // Wait for connection, then
+
+    private void waitForConnection() throws IOException
+    {
+        System.out.println("waiting for someone else to connect ... \n");
+        clientSocket = serverSocket.accept();
+        System.out.println("connected");
+    }
+
+    // get stream to send and receive data
+    private void setupStreams() throws IOException
+    {
+        // Send things out
+        output = new ObjectOutputStream(clientSocket.getOutputStream());
+        output.flush();
+        // receive stuff
+        input =  new ObjectInputStream(clientSocket.getInputStream());
+        System.out.println("\n The streams are not setup \n ");
+    }
+
+    //during the chat conversation
+    private void whileChatting() throws IOException
+    {
+        String message = ("You are now connected");
+        //TODO: create sendMsg();
+        do
+        {
+            try{
+                message = (String) input.readObject();
+                System.out.println("\n " + message);
+            }catch(ClassNotFoundException classNotFoundException)
+            {
+                System.out.println("\n idk wtf that user sent!");
+            }
+        }while(!message.equals("CLIENT - END"));
+
+    }
+
+    // send message to client
+    private void sendMsg(String msg)
+    {
+        try{
+            output.writeObject("NAME - " + msg);
+            output.flush();
+            //showmessage("\nServer - " + msg);
+        }catch(IOException ioException)
+        {
+            System.out.println("can't send that msg");
+        }
+    }
 
 }
