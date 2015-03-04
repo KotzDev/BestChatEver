@@ -1,3 +1,5 @@
+import java.awt.*;
+
 /**Simple XML parsing stuff, all static for now*/
 public class xmlLib {
     public static void main(String[] args){
@@ -64,6 +66,17 @@ public class xmlLib {
     public static String createXML(String msg, String name, String color){ //TODO express color properly?
         msg = replaceXMLchars(msg); //replace possible xml syntax in the message body
         return  "<message sender=" + '"'+ name + '"' + "> <text color=" + '"' + color + '"' + ">" + '"' + msg + '"' + " </text> </message>";
+    }
+    /**Crates the formatted message, ready to be set to the JEditorPane log*/
+    public static String getPaneText(String name, String color, String msg){
+        //TODO figure this shit out
+        return  "";
+
+
+
+    }
+    public static String color2HexString(Color color) {
+        return "#" + Integer.toHexString(color.getRGB() & 0x00ffffff);
     }
 
 

@@ -7,7 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 /**
- * Created by sydney.wojnach on 2015-02-26.
+ * The actual chat window
  */
 public class GUI2 extends JPanel{
 
@@ -26,6 +26,7 @@ public class GUI2 extends JPanel{
     private final static String newline = "\n";
     private ObjectInputStream input;
     private ObjectOutputStream output;
+    private Color chatColor;
 
     /**-----------------------------------------------------------------------------
      //                           CONSTRUCTOR
@@ -75,6 +76,14 @@ public class GUI2 extends JPanel{
 
             //TODO: skicka msg från sendfield till server.
                 System.out.println("sending msg to server");
+            }
+        });
+        colorPicker.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                chatColor = JColorChooser.showDialog(null,
+                        "Pick a color", null); //hope this shit works
+
             }
         });
         add(namelabel);
