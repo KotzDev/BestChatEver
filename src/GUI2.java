@@ -26,6 +26,7 @@ public class GUI2 extends JPanel implements Runnable{
     private ObjectInputStream input;
     private ObjectOutputStream output;
     private String chatColor = "#000000";
+    Color tempColor = Color.black;
     private JEditorPane chatLog;
     private String chatLogText = "<p>Chat Time!<p>";
 
@@ -66,8 +67,12 @@ public class GUI2 extends JPanel implements Runnable{
         colorPicker.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                chatColor = xmlLib.color2HexString(JColorChooser.showDialog(null,"Pick a color", null));
-            }
+                tempColor = JColorChooser.showDialog(null, "Pick a color", Color.black);
+                if (tempColor != null)
+                        chatColor=xmlLib.color2HexString(tempColor);
+                    }
+
+
         });
         add(namelabel);
         add(sendField);

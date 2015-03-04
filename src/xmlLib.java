@@ -70,6 +70,9 @@ public class xmlLib {
         return logText;
     }
     public static String color2HexString(Color color) {
+        if (color == null){
+            return "#000000";
+        }
         return "#" + Integer.toHexString(color.getRGB() & 0x00ffffff);
     }
 

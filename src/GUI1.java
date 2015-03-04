@@ -47,7 +47,7 @@ public class GUI1 extends JPanel {
     /**Constructor*/
     public GUI1()
     {
-        setPreferredSize(new Dimension(140,400));
+        setPreferredSize(new Dimension(140,300));
 
         myServerButton = new JButton("START SERVER");
         myServerButton.addActionListener(new ActionListener() {
