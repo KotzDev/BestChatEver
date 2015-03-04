@@ -40,7 +40,8 @@ public class GUI2 extends JPanel implements Runnable{
         setPreferredSize(new Dimension(450,450));
         sendButton = new JButton("SEND");
         colorPicker = new JButton("Pick a color");
-        namelabel = new JLabel();
+        namelabel = new JLabel(name);
+        this.name = name;
         chatLog = new JEditorPane();
         chatLog.setPreferredSize(new Dimension(350, 350));
         chatLog.setContentType("text/html");
@@ -48,32 +49,18 @@ public class GUI2 extends JPanel implements Runnable{
         add(new JScrollPane(chatLog));
         chatLog.setText(chatLogText);
 
-        //TODO: Lägg till actionlistern på knappen(Hämta från GUI1)
-        //TODO: Starta sedan "logger" classen."
         sendField = new JTextField();
         sendField.setColumns(30);
-        sendField.addActionListener(new ActionListener() {
+        sendField.addActionListener(new ActionListener() {  //enter
             @Override
             public void actionPerformed(ActionEvent e) {
-                msg = sendField.getText();
-                sendField.setText("");
-                chatLogText += "<br>" + msg + newline;
-                chatLog.setText(chatLogText);
-
-                //TODO: Nu ska den skicka till XMLlib
-                //TODO: sen får vi tillbaka något från XMLLib som lagras
-                System.out.println("Storing msg");
+                sendMsg(sendField.getText());
             }
         });
         sendButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-
-                sendMsg(msg);
-
-                //TODO: skicka msg från sendfield via IOSTREAMS
-                //TODO: Här kommer vi använda IO STREAMS, eventuellt metoderna nedan.
-                System.out.println("sending msg via socket");
+            public void actionPerformed(ActionEvent e) {    //click
+                sendMsg(sendField.getText());
             }
         });
         colorPicker.addActionListener(new ActionListener() {
@@ -88,57 +75,44 @@ public class GUI2 extends JPanel implements Runnable{
         add(colorPicker);
         add(sendButton);
     }
-
-
-    /**-----------------------------------------------------------------------------
-     //                           METHODS
-     //-----------------------------------------------------------------------------*/
-
-
-
-        private void whileChatting()throws IOException
-        {
-            String message = "You are now connected";
-            sendMsg(message);
-            do
-            {
-                try
-                {
-                    message = (String) input.readObject();
-                    if(message != null) {
-                        System.out.println("We just receieved: " + message);
-                        sendMsg("\n" + message);
-                    }
-                }catch(ClassNotFoundException classNotFoundException)
-                {
-                    System.out.println("\n idk wtf that user sent!");
-                }
-            }while(!message.equals("END"));
-        }
-
-        private void sendMsg(String msg)
+    private void whileChatting()throws IOException {
+        String message = "You are now connected";
+        sendMsg(message);
+        do
         {
             try
             {
-                output.writeObject(name +" - " +msg);
-                output.flush();
-                //System.out.println("We just pushed the recorded msg thru the tube!");
-                //Showmessage("\n"+name+" - " + msg);
-            }catch(IOException ioException)
+                message = (String) input.readObject();
+                if(message != null) {
+                    System.out.println("We just receieved: " + message);
+                    sendMsg("\n" + message);
+                }
+            }catch(ClassNotFoundException classNotFoundException)
             {
-                System.out.println("can't send that message");
+                System.out.println("\n idk wtf that user sent!");
             }
-        }
-        private void addMsgToLog(String msg){
-            String s = "";
-            /*s = "<br/><p>" + "Me" + ":" +
-                    "<font color=\"" + chatColor.toString() + "\">" +
-                    "<br/>" + fixText(message) + "</font></p>";
+        }while(!message.equals("END"));
+    }
 
-            chatLog.setText("");
-            chatLog.setText(allText + "</body></html>");*/
-
+    private void sendMsg(String inMsg)
+    {
+        try
+        {
+            sendField.setText("");
+            String msgToSend = xmlLib.createXML(inMsg, this.name, this.chatColor);
+            addMsgToLog(inMsg);
+            output.writeObject(msgToSend);
+            output.flush(); //TODO check this!
+            //TODO addmsg here
+        }catch(IOException ioException)
+        {
+            System.out.println("can't send that message");
         }
+    }
+    private void addMsgToLog(String inMsg){
+        chatLogText += "<br>" + xmlLib.getLogText(inMsg, name, chatColor);
+        chatLog.setText(chatLogText);
+    }
 
     @Override
     public void run() {

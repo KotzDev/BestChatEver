@@ -68,12 +68,12 @@ public class xmlLib {
         return  "<message sender=" + '"'+ name + '"' + "> <text color=" + '"' + color + '"' + ">" + '"' + msg + '"' + " </text> </message>";
     }
     /**Crates the formatted message, ready to be set to the JEditorPane log*/
-    public static String getPaneText(String name, String color, String msg){
-        //TODO figure this shit out
-        return  "";
-
-
-
+    public static String getLogText(String inMsg, String name, String color){
+        String logText = "<br/><p>" + name + ":" +
+                "<font color=\"" + color + "\">" +
+                "<br/>" + inMsg + "</font></p>";
+        System.out.println(logText);
+        return logText;
     }
     public static String color2HexString(Color color) {
         return "#" + Integer.toHexString(color.getRGB() & 0x00ffffff);
