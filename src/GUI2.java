@@ -28,7 +28,7 @@ public class GUI2 extends JPanel implements Runnable{
     private String chatColor = "#000000";
     Color tempColor = Color.black;
     private JEditorPane chatLog;
-    private String chatLogText = "<html><body><p>Chat Time!<p>";
+    private String chatLogText = "<p>Chat Time!<p>";
 
 
     /**Constructor*/
@@ -47,9 +47,7 @@ public class GUI2 extends JPanel implements Runnable{
         chatLog.setPreferredSize(new Dimension(440, 350));
         chatLog.setContentType("text/html");
         chatLog.setAutoscrolls(true);
-        JScrollPane scrollPane = new JScrollPane(chatLog);
-        scrollPane.setAutoscrolls(true);
-        add(scrollPane);
+        add(new JScrollPane(chatLog));
         chatLog.setText(chatLogText);
 
         sendField = new JTextField();
@@ -70,7 +68,7 @@ public class GUI2 extends JPanel implements Runnable{
             @Override
             public void actionPerformed(ActionEvent e) {
                 tempColor = JColorChooser.showDialog(null, "Pick a color", Color.black);
-                if (tempColor != null)  //make sure that cancel works properly
+                if (tempColor != null)
                         chatColor=xmlLib.color2HexString(tempColor);
                     }
 
@@ -113,11 +111,12 @@ public class GUI2 extends JPanel implements Runnable{
         }
     }
     private void recieveMsg(String inXMLMsg){
-        if (!xmlLib.checkMsg(inXMLMsg)){    //check for broken msg
-            addMsgToLog("Broken message recieved! =(", "[SYSTEM]","#000000");
+        if (!xmlLib.checkMsg(inXMLMsg)){
+            addMsgToLog("Broken message recieved!", "[SYSTEM]","#000000");
 
         }
         else {
+            //do usual stuff
             addMsgToLog(xmlLib.getMsg(inXMLMsg),xmlLib.findUser(inXMLMsg), xmlLib.findColor(inXMLMsg));
         }
 
@@ -125,11 +124,7 @@ public class GUI2 extends JPanel implements Runnable{
     }
     private void addMsgToLog(String inMsg, String user, String inColor){
         chatLogText += "<br>" + xmlLib.getLogText(inMsg, user, inColor);
-
-        chatLog.setText(chatLogText+"</body></html>");
-        System.out.println(chatLogText);
-
-        //chatLog.setCaret(chatLog.);   //scroll bs
+        chatLog.setText(chatLogText);
     }
 
 
