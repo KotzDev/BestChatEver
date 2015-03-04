@@ -27,7 +27,7 @@ public class GUI2 extends JPanel implements Runnable{
     private ObjectOutputStream output;
     private String chatColor = "#000000";
     private JEditorPane chatLog;
-    private String chatLogText = "<p>CHAT TAEM IS NAO<p>";
+    private String chatLogText = "<p>Chat Time!<p>";
 
 
     /**Constructor*/
@@ -60,9 +60,7 @@ public class GUI2 extends JPanel implements Runnable{
         sendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {    //click
-//                sendMsg(sendField.getText()); //actual    
-                //test only
-                recieveMsg(xmlLib.createXML(sendField.getText(),"testzor",chatColor));
+                sendMsg(sendField.getText());
             }
         });
         colorPicker.addActionListener(new ActionListener() {
@@ -84,12 +82,11 @@ public class GUI2 extends JPanel implements Runnable{
             try
             {
                 message = (String) input.readObject();
-                //System.out.println("We just receieved: " + message);
-                //sendMsg("\n" + message);
-                addMsgToLog(xmlLib.getMsg(message),xmlLib.findUser(message), xmlLib.findColor(message));
+                recieveMsg(message);
+                //addMsgToLog(xmlLib.getMsg(message),xmlLib.findUser(message), xmlLib.findColor(message));
             }catch(ClassNotFoundException classNotFoundException)
             {
-                System.out.println("\n idk wtf that user sent!");
+                System.out.println("\n msg from the other dude/dudette is unreadable");
             }
         }while(!message.equals(null));
     }
@@ -102,7 +99,7 @@ public class GUI2 extends JPanel implements Runnable{
             String msgToSend = xmlLib.createXML(inMsg, this.name, this.chatColor);
             addMsgToLog(inMsg, name, chatColor);
             output.writeObject(msgToSend);
-            output.flush(); //TODO check this!
+            output.flush();
         }catch(IOException ioException)
         {
             System.out.println("can't send that message");
@@ -112,12 +109,10 @@ public class GUI2 extends JPanel implements Runnable{
         if (!xmlLib.checkMsg(inXMLMsg)){
             addMsgToLog("Broken message recieved!", "[SYSTEM]","#000000");
 
-
         }
         else {
             //do usual stuff
             addMsgToLog(xmlLib.getMsg(inXMLMsg),xmlLib.findUser(inXMLMsg), xmlLib.findColor(inXMLMsg));
-
         }
 
 
