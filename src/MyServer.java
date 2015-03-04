@@ -87,7 +87,7 @@ public class MyServer extends Thread
             System.out.println("\n The streams are not setup \n ");
 
             myChatWindow = new ChatWindow(name,output,input);
-
+            // IOSTREAMS har blivit flyttade till GUI2
             //ioStream();
 
         } catch (Exception e) {
