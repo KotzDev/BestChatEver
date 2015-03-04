@@ -11,44 +11,40 @@ import java.io.InputStreamReader;
 import com.sun.corba.se.spi.activation.Server;
 
 /**
- * First screen thingy
+ * The first panel which includes the functionality to instantiate
+ * the server or client. You also get to set custom options.
  */
 public class GUI1 extends JPanel {
 
-    /**-----------------------------------------------------------------------------
-     /*                           GLOBAL VARIABLES
-     //-----------------------------------------------------------------------------*/
-        private Server cliServ;
-        //private JCheckBoxMenuItem myCheckBoxes;
+
+        // The buttons
         private JButton myServerButton;
         private JButton myClientButton;
-
+        // The txtfields
         private JTextField clientPortField;
         private JTextField serverPortField;
         private JTextField serverNameField;
         private JTextField clientNameField;
         private JTextField hostIPField;
-
+        // The labels
         private JLabel serverNameLabel;
         private JLabel clientNameLabel;
         private JLabel serverPortLabel;
         private JLabel clientPortLabel;
         private JLabel hostIPLabel;
-
+        // The Strings
         private String serverPort;
         private String clientPort;
         private String serverName;
         private String clientName;
         private String hostIP;
 
-        private JTextArea console;
-        private JScrollPane consoleScrollPane;
-
-    /**Constructor*/
+    /** Constructor for GUI1 JPanel which draws/adds all the functionality on the screen*/
     public GUI1()
     {
-        setPreferredSize(new Dimension(140,300));
+        setPreferredSize(new Dimension(140,300));   // Setting prefered size for the panel
 
+        // THE SERVER BUTTON
         myServerButton = new JButton("START SERVER");
         myServerButton.addActionListener(new ActionListener() {
             @Override
@@ -58,6 +54,8 @@ public class GUI1 extends JPanel {
                 new MyServer(Integer.parseInt(serverPort), serverName).start();
             }
         });
+
+        // THE CLIENT BUTTON
         myClientButton = new JButton("START CLIENT ");
         myClientButton.addActionListener(new ActionListener() {
             @Override
@@ -68,12 +66,14 @@ public class GUI1 extends JPanel {
             }
         });
 
+        // SETTING FIELDS SIZE
         serverPortField = new JTextField(8);
         clientPortField = new JTextField(8);
         serverNameField = new JTextField(8);
         clientNameField = new JTextField(8);
         hostIPField = new JTextField(8);
 
+        // SETTING THE LABELS
         serverPortLabel = new JLabel();
         serverPortLabel.setText("Incoming Port");
         clientPortLabel = new JLabel();
@@ -83,6 +83,7 @@ public class GUI1 extends JPanel {
         clientNameLabel = new JLabel();
         hostIPLabel = new JLabel("Enter IP");
 
+        // HARDCODING FOR TROUBLESHOOTING TODO: Remove this once we go production.
         clientNameLabel.setText("Client Name");
         clientNameLabel.setText("Client Name");
         serverNameField.setText("serverlol");
@@ -91,28 +92,30 @@ public class GUI1 extends JPanel {
         clientPortField.setText("5000");
         hostIPField.setText("169.254.123.249");
 
+        // ADDING THE COMPONENTS TO THE PANEL
         add(myServerButton);
         add(serverNameLabel);
         add(serverNameField);
         add(serverPortLabel);
         add(serverPortField);
-
+        //------------------
         add(myClientButton);
         add(clientNameLabel);
         add(clientNameField);
         add(clientPortLabel);
         add(clientPortField);
+        //------------------
         add(hostIPLabel);
         add(hostIPField);
-
+        //------------------
 
 
     }//End of constructor
 
-    /**-----------------------------------------------------------------------------
-     //                           METHODS
-     //-----------------------------------------------------------------------------*/
-
+    /**
+     *  This method reads from the FIELDS and sets the corresponding STIRNGS.
+     *  This method will probably be called by actionlisteners which are placed on the buttons
+     */
     private void getInfo(){
         serverPort = serverPortField.getText();
         clientPort = clientPortField.getText();
@@ -120,10 +123,4 @@ public class GUI1 extends JPanel {
         clientName = clientNameField.getText();
         hostIP = hostIPField.getText();
     }
-    public void checkBoxes()
-    {
-
-        //TODO: Det ska vara checkboxes istället för knappar.
-    }
-
 }

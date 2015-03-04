@@ -4,170 +4,55 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 /**
- * Created by sydney.wojnach on 2015-02-19.
+ * This program sets up sockets and IOStreams which will be used in ChatWindow
  */
 public class MyServer extends Thread
 {
-
-     /**----------------------------------------------------------------
-     /*                         GLOBAL VARIABLES
-     //-----------------------------------------------------------------*/
-
     // Sockets till uppkopplingen
     private ServerSocket serverSocket;
     private Socket clientSocket = null;
-    // Strömmar för att läsa/skriva
-    private BufferedReader in;
-    private PrintWriter out;
-    // Eller
+    // Strömmar för att läsa och skriva
     private ObjectOutputStream output;
     private ObjectInputStream input;
     // MISC
-    private String echo;
-    private int port = 5000;
+    private int port;
     private String name;
     // GUI STUFF
     private ChatWindow myChatWindow;
 
-    /**----------------------------------------------------------------
-     /*                         CONSTRUCTORS
-     //-----------------------------------------------------------------*/
-
-    // Constructor for server [BETA]
+    /** This constructor creates a serversocket only */
     public MyServer(int port, String NAME)
     {
-        name = NAME;
-        //Koppla upp servern socket
+        this.name = NAME;
+        this.port = port;
         try{
-            this.port = port;
             serverSocket = new ServerSocket(port);
             System.out.println("ServerSocket initiated...");
         } catch (IOException e){
-            System.out.println("Could not listen on port or currently in use: " + this.port);
+            System.out.println("Server could not setup port or it's currently in use: " + this.port);
             System.exit(-1);
         }
     }
 
-    // Constructor for Client [ALPHA] - not being used ATM.
-    public MyServer(String hostAddress, int port)
-    {
-        try {
-            clientSocket = new Socket(hostAddress, 4444);
-            out = new PrintWriter(clientSocket.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(
-                    clientSocket.getInputStream()));
-        } catch (UnknownHostException e) {
-            System.err.println("Don't know about host.\n" + e);
-            System.exit(1);
-        } catch (IOException e) {
-            System.err.println("Couldn't get I/O for "
-                    + "the connection to host.\n" + e);
-            System.exit(1);
-        }
-        // Kommer vi hit har anslutningen gått bra
-        System.out.println("Connection successful!");
-    }
-
-    /**----------------------------------------------------------------
-     /*                         METHODS
-     //-----------------------------------------------------------------*/
-
+    /** The run function below places the incomnig socket which is accepted by serversocket
+     *  in clientsocket. We create IOStreams which are then used in the ChatWindow instansation
+     */
     @Override
     public void run()
     {
-        //Lyssna efter klient (när klienten ansluter sätter vi upp Clientsocket)
         try {
             System.out.println("Server Awating incoming connections on: " + this.port);
             clientSocket = serverSocket.accept();
             System.out.println("Server Connection established: " + clientSocket.getInetAddress() + ":"  + this.port);
-            //out = new PrintWriter(clientSocket.getOutputStream(), true);
-            //in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            output = new ObjectOutputStream(clientSocket.getOutputStream()); //Send stuff
-            input =  new ObjectInputStream(clientSocket.getInputStream()); //receive stuff
-            System.out.println("\n Streams are setup - going to starting chatwindow. \n ");
-
-            myChatWindow = new ChatWindow(name,output,input);
-            // IOSTREAMS har blivit flyttade till GUI2
-            //ioStream();
+            output = new ObjectOutputStream(clientSocket.getOutputStream()); //used for sending stuff
+            input =  new ObjectInputStream(clientSocket.getInputStream()); //used for reciving stuff
+            System.out.println("\n Streams are setup - starting chatwindow. /dance \n ");
+            myChatWindow = new ChatWindow(this.name,output,input);
 
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Server Accept failed: on port " + this.port);
+            System.out.println("Server Accept failed on port: " + this.port);
             System.exit(-1);
         }
     }
-
-
-    public void ioStream()
-    {
-        while(true)
-        {
-            try {
-                System.out.println("while loop initiated in Server Class");
-                echo = in.readLine();
-                if (echo == null) {
-                    System.out.println("Client has disconnected");
-                    System.exit(1);
-                }
-                System.out.println("Received: " + echo);
-                //out.println(echo.toUpperCase());
-
-            } catch(IOException e){
-                System.out.println("readLine failed" + e);
-                System.exit(1);
-            }
-        }
-    }
-
-    // Wait for connection, then
-
-    private void waitForConnection() throws IOException
-    {
-        System.out.println("waiting for someone else to connect ... \n");
-        clientSocket = serverSocket.accept();
-        System.out.println("connected");
-    }
-
-    // get stream to send and receive data
-    private void setupStreams() throws IOException
-    {
-        // Send things out
-        output = new ObjectOutputStream(clientSocket.getOutputStream());
-        output.flush();
-        // receive stuff
-        input =  new ObjectInputStream(clientSocket.getInputStream());
-        System.out.println("\n The streams are not setup \n ");
-    }
-
-    //during the chat conversation
-    private void whileChatting() throws IOException
-    {
-        String message = ("You are now connected");
-        //TODO: create sendMsg();
-        do
-        {
-            try{
-                message = (String) input.readObject();
-                System.out.println("\n " + message);
-            }catch(ClassNotFoundException classNotFoundException)
-            {
-                System.out.println("\n idk wtf that user sent!");
-            }
-        }while(!message.equals("CLIENT - END"));
-
-    }
-
-    // send message to client
-    private void sendMsg(String msg)
-    {
-        try{
-            output.writeObject("NAME - " + msg);
-            output.flush();
-            //showmessage("\nServer - " + msg);
-        }catch(IOException ioException)
-        {
-            System.out.println("can't send that msg");
-        }
-    }
-
 }

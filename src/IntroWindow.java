@@ -3,22 +3,13 @@ import javax.swing.text.View;
 import java.awt.*;
 
 /**
- * Created by sydney.wojnach on 2015-02-19.
+ * Create a JFrame for the GUI1 panel.
  */
 public class IntroWindow extends JFrame {
 
-    /**-----------------------------------------------------------------------------
-     /*                           GLOBAL VARIABLES
-     //-----------------------------------------------------------------------------*/
-
     private GUI1 myGUI1;
 
-    //test comment
-
-    /**-----------------------------------------------------------------------------
-     //                           CONSTRUCTOR
-     //-----------------------------------------------------------------------------*/
-
+    /** Constructor that instantiates and adds the myGUI1 panel to the IntroWindow JFrame*/
     public IntroWindow()
     {
         myGUI1 = new GUI1();
@@ -29,10 +20,7 @@ public class IntroWindow extends JFrame {
 
     }//End of constructor
 
-    /**-----------------------------------------------------------------------------
-     //*                             MAIN
-     //-----------------------------------------------------------------------------*/
-
+    /** The main method which starts the ChatClient*/
     public static void main(String[] args)
     {
         new IntroWindow();
