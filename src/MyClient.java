@@ -4,85 +4,40 @@ import java.net.*;
 
 /**
  * Detta program skapar en klient som ansluter till en
- * fördefinierad server. Programmet läser in text från
- * terminalen och skickar till servern, för att sedan 
- * skriva ut serverns svar. Programmet fortsätter tills
- * de avbryts utifrån.
+ * fördefinierad server. Den sätter upp sockets och IOStreams
+ * som sedan anges i ChatWindow konstruktorn
  */
 public class MyClient extends Thread {
 
-
-	/**-----------------------------------------------------------------------------
-	 /*                           GLOBAL VARIABLES
-	 //-----------------------------------------------------------------------------*/
-
-
 	private int port;
+	private String name;
 	private String HostIP;
-	Socket clientSocket = null;
-	PrintWriter out = null;
-	BufferedReader in = null;
+	private Socket clientSocket = null;
 	private ObjectOutputStream output;
 	private ObjectInputStream input;
-	BufferedReader stdIn;
-	String userInput;
 	private ChatWindow myChatWindow;
 
+	/** Constructor which sets IP,port and name - which are later used in the ChatWindow constructor */
+	public MyClient(String HostIP, int Port, String NAME)
+	{
+		this.HostIP = HostIP;
+		this.port = Port;
+		this.name = NAME;
+	}
 
-	/**-----------------------------------------------------------------------------
-	 //                           CONSTRUCTOR
-	 //-----------------------------------------------------------------------------*/
-
-
-	public MyClient(String HostIP, int Port, String NAME) {
+	@Override
+	public void run()
+	{
 		try {
-			this.HostIP = HostIP;
-			this.port = Port;
-
 			clientSocket = new Socket(HostIP, this.port);
-			//out = new PrintWriter(clientSocket.getOutputStream(), true);
-			//in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-			output = new ObjectOutputStream(clientSocket.getOutputStream()); //Send stuff
-			input =  new ObjectInputStream(clientSocket.getInputStream()); //receive stuff
+			output = new ObjectOutputStream(clientSocket.getOutputStream()); //Stream for Sending stuff
+			input =  new ObjectInputStream(clientSocket.getInputStream()); //Stream for receiving stuff
 			System.out.println("Client connected to " + this.HostIP + " on port " + this.port);
-			myChatWindow = new ChatWindow(NAME, output, input);
+			myChatWindow = new ChatWindow(this.name, output, input);
 
 		} catch (Exception E) {
 			E.printStackTrace();
+			System.out.println("Something went wrong in the run method located in MyClient");
 		}
 	}
-
-	/**-----------------------------------------------------------------------------
-	 //                           METHODS
-	 //-----------------------------------------------------------------------------*/
-
-
-	@Override
-	public void run() {
-		try {
-
-
-			// Anslut stdIn till terminalen
-			stdIn = new BufferedReader(new InputStreamReader(System.in));
-
-			// Läs in från terminalen och skicka till servern:
-			while ((userInput = stdIn.readLine()) != null) {
-				out.println(userInput);
-				System.out.println("echo: " + in.toString());
-			}
-			System.out.println("Client out of while");
-
-
-			// Hit kommer vi troligtvis aldrig,
-			// men så här stänger man alla inblandade strömmar
-			out.close();
-			in.close();
-			stdIn.close();
-			clientSocket.close();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 }
