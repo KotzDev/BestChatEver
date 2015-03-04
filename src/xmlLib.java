@@ -61,14 +61,17 @@ public class xmlLib {
         msg = replaceXMLchars(msg); //replace possible xml syntax in the message body
         return  "<message sender=" + '"'+ name + '"' + "> <text color=" + '"' + color + '"' + ">" + '"' + msg + '"' + " </text> </message>";
     }
+
     /**Crates the formatted message, ready to be set to the JEditorPane log*/
     public static String getLogText(String inMsg, String name, String color){
         String logText = "<br/><p>" + name + ":" +
                 "<font color=\"" + color + "\">" +
-                "<br/>" + inMsg + "</font></p>";
+                "<br/>" + replaceXMLchars(inMsg) + "</font></p>";
         //System.out.println(logText);
         return logText;
     }
+
+    /**Converts color objects to hex string*/
     public static String color2HexString(Color color) {
         if (color == null){
             return "#000000";
