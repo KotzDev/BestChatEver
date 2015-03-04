@@ -64,7 +64,7 @@ public class GUI1 extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 getInfo();
                 System.out.println("Starting Client in GUI1, username: " + clientName);
-                new MyClient("130.229.182.247", Integer.parseInt(clientPort), clientName).start();
+                new MyClient("169.254.123.249", Integer.parseInt(clientPort), clientName).start();
             }
         });
 

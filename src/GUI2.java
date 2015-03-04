@@ -43,7 +43,7 @@ public class GUI2 extends JPanel implements Runnable{
         namelabel = new JLabel(name);
         this.name = name;
         chatLog = new JEditorPane();
-        chatLog.setPreferredSize(new Dimension(350, 350));
+        chatLog.setPreferredSize(new Dimension(440, 350));
         chatLog.setContentType("text/html");
         chatLog.setAutoscrolls(true);
         add(new JScrollPane(chatLog));
@@ -60,7 +60,7 @@ public class GUI2 extends JPanel implements Runnable{
         sendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {    //click
-//                sendMsg(sendField.getText()); //actual
+//                sendMsg(sendField.getText()); //actual    
                 //test only
                 recieveMsg(xmlLib.createXML(sendField.getText(),"testzor",chatColor));
             }
@@ -84,15 +84,14 @@ public class GUI2 extends JPanel implements Runnable{
             try
             {
                 message = (String) input.readObject();
-                if(message != null) {
-                    System.out.println("We just receieved: " + message);
-                    sendMsg("\n" + message);
-                }
+                //System.out.println("We just receieved: " + message);
+                //sendMsg("\n" + message);
+                addMsgToLog(xmlLib.getMsg(message),xmlLib.findUser(message), xmlLib.findColor(message));
             }catch(ClassNotFoundException classNotFoundException)
             {
                 System.out.println("\n idk wtf that user sent!");
             }
-        }while(!message.equals("END"));
+        }while(!message.equals(null));
     }
 
     private void sendMsg(String inMsg)
@@ -133,10 +132,10 @@ public class GUI2 extends JPanel implements Runnable{
     public void run() {
 
 
-        /*try {
+        try {
             this.whileChatting();
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
     }
 }
