@@ -104,8 +104,12 @@ public class GUI2 extends JPanel implements Runnable{
             {
                 try
                 {
+
                     message = (String) input.readObject();
-                    sendMsg("\n" + message);
+                    if(message != null) {
+                        System.out.println("We just receieved: " + message);
+                        sendMsg("\n" + message);
+                    }
                 }catch(ClassNotFoundException classNotFoundException)
                 {
                     System.out.println("\n idk wtf that user sent!");
@@ -119,7 +123,7 @@ public class GUI2 extends JPanel implements Runnable{
             {
                 output.writeObject(name +" - " +msg);
                 output.flush();
-                System.out.println("We just pushed the recorded msg thru the tube!");
+                //System.out.println("We just pushed the recorded msg thru the tube!");
                 //Showmessage("\n"+name+" - " + msg);
             }catch(IOException ioException)
             {
