@@ -66,39 +66,39 @@ public class GUI1 extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 getInfo();
-                new MyClient("130.229.182.247", Integer.parseInt(clientPort), clientName).start();
                 System.out.println("Starting Client in GUI1, username: " + clientName);
+                new MyClient("130.229.182.247", Integer.parseInt(clientPort), clientName).start();
             }
         });
 
         serverPortField = new JTextField(8);
-        serverPortField.addActionListener(new ActionListener() {
+        /*serverPortField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 serverPort = serverPortField.getText();
             }
-        });
+        });*/
         clientPortField = new JTextField(8);
-        clientPortField.addActionListener(new ActionListener() {
+        /*clientPortField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 clientPort = clientPortField.getText();
             }
-        });
+        });*/
         serverNameField = new JTextField(8);
-        serverNameField.addActionListener(new ActionListener() {
+        /*serverNameField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 serverName = serverNameField.getText();
             }
-        });
+        });*/
         clientNameField = new JTextField(8);
-        clientNameField.addActionListener(new ActionListener() {
+        /*clientNameField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 clientName = clientNameField.getText();
             }
-        });
+        });*/
 
 
         serverPortLabel = new JLabel();
