@@ -56,7 +56,8 @@ public class GUI1 extends JPanel {
         myServerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Starting Server in GUI1");
+                getInfo();
+                System.out.println("Starting Server in GUI1, username: " + serverName);
                 new MyServer(Integer.parseInt(serverPort), serverName).start();
             }
         });
@@ -64,8 +65,9 @@ public class GUI1 extends JPanel {
         myClientButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new MyClient("169.254.123.249", Integer.parseInt(clientPort), clientName).start();
-                System.out.println("Starting Client in GUI1");
+                getInfo();
+                new MyClient("130.229.182.247", Integer.parseInt(clientPort), clientName).start();
+                System.out.println("Starting Client in GUI1, username: " + clientName);
             }
         });
 
@@ -107,6 +109,11 @@ public class GUI1 extends JPanel {
         serverNameLabel.setText("Server Name");
         clientNameLabel = new JLabel();
         clientNameLabel.setText("Client Name");
+        clientNameLabel.setText("Client Name");
+        serverNameField.setText("serverlol");
+        serverPortField.setText("5000");
+        clientNameField.setText("clientlol");
+        clientPortField.setText("5000");
 /*
         console = new JTextArea();
         console.setColumns(10);
@@ -144,7 +151,12 @@ public class GUI1 extends JPanel {
      //                           METHODS
      //-----------------------------------------------------------------------------*/
 
-
+    private void getInfo(){
+        serverPort = serverPortField.getText();
+        clientPort = clientPortField.getText();
+        serverName = serverNameField.getText();
+        clientName = clientNameField.getText();
+    }
     public void checkBoxes()
     {
 

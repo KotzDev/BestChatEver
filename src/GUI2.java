@@ -28,7 +28,7 @@ public class GUI2 extends JPanel implements Runnable{
     private ObjectOutputStream output;
     private Color chatColor = Color.black;
     private JEditorPane chatLog;
-    private String chatLogText = "";
+    private String chatLogText = "<p>this is bullshit<p>";
 
     /**-----------------------------------------------------------------------------
      //                           CONSTRUCTOR
@@ -44,7 +44,6 @@ public class GUI2 extends JPanel implements Runnable{
         sendButton = new JButton("SEND");
         colorPicker = new JButton("Pick a color");
         namelabel = new JLabel();
-        namelabel.setText(name);
         chatLog = new JEditorPane();
         //myTextArea = new JTextArea();
         //myTextArea.setText("AMMMAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD\nsds\n");
@@ -55,6 +54,7 @@ public class GUI2 extends JPanel implements Runnable{
         //myTextArea.setWrapStyleWord(true);
         //myTextArea.setEditable(false);
         add(new JScrollPane(chatLog));
+        chatLog.setText(chatLogText);
         //add(new JScrollPane(myTextArea));
 
         //TODO: Lägg till actionlistern på knappen(Hämta från GUI1)
@@ -66,14 +66,11 @@ public class GUI2 extends JPanel implements Runnable{
             public void actionPerformed(ActionEvent e) {
                 msg = sendField.getText();
                 sendField.setText("");
-<<<<<<< HEAD
 
                 //myTextArea.append(msg + newline);
                 chatLog.setText(msg + newline);
-=======
                 myTextArea.append(msg + newline);
 
->>>>>>> 5d805854635dfae877244f882a5e89f3d0dad6dd
                 //TODO: Nu ska den skicka till XMLlib
                 //TODO: sen får vi tillbaka något från XMLLib som lagras
                 System.out.println("Storing msg");
@@ -142,7 +139,6 @@ public class GUI2 extends JPanel implements Runnable{
                 System.out.println("can't send that message");
             }
         }
-<<<<<<< HEAD
         private void addMsgToLog(String msg){
             String s = "";
             /*s = "<br/><p>" + "Me" + ":" +
@@ -153,17 +149,15 @@ public class GUI2 extends JPanel implements Runnable{
             chatLog.setText(allText + "</body></html>");*/
 
         }
-=======
 
     @Override
     public void run() {
 
 
-        try {
+        /*try {
             this.whileChatting();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
->>>>>>> 5d805854635dfae877244f882a5e89f3d0dad6dd
 }
