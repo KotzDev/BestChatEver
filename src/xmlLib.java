@@ -9,6 +9,9 @@ public class xmlLib {
         String msgText = XMLmsgIn.substring(XMLmsgIn.indexOf("<text"));
         msgText = msgText.substring(msgText.indexOf(">")+2, msgText.indexOf("</text")-2);
         msgText = recoverXMLchars(msgText);     //puts XML syntax back into the msg text
+        if(msgText.equals("<disconnect />")){
+            msgText="[SYSTEM]: The user disconnected!";
+        }
         return msgText;
 
     }
@@ -78,6 +81,12 @@ public class xmlLib {
         }
         return "#" + Integer.toHexString(color.getRGB() & 0x00ffffff);
     }
+
+    /**Generate dosconnect msg*/
+    public static String makeDiscMsg(){
+        return "<disconnect />";
+    }
+
 
 
 }
