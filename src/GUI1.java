@@ -71,7 +71,7 @@ public class GUI1 extends JPanel {
         clientPortField = new JTextField(8);
         serverNameField = new JTextField(8);
         clientNameField = new JTextField(8);
-        hostIPField = new JTextField(8);
+        hostIPField = new JTextField(10);
 
         // SETTING THE LABELS
         serverPortLabel = new JLabel();
