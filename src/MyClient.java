@@ -22,6 +22,8 @@ public class MyClient extends Thread {
 	Socket clientSocket = null;
 	PrintWriter out = null;
 	BufferedReader in = null;
+	private ObjectOutputStream output;
+	private ObjectInputStream input;
 	BufferedReader stdIn;
 	String userInput;
 	private ChatWindow myChatWindow;
@@ -38,11 +40,12 @@ public class MyClient extends Thread {
 			this.port = Port;
 
 			clientSocket = new Socket(HostIP, this.port);
-			out = new PrintWriter(clientSocket.getOutputStream(), true);
-			in = new BufferedReader(new InputStreamReader(
-					clientSocket.getInputStream()));
+			//out = new PrintWriter(clientSocket.getOutputStream(), true);
+			//in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+			output = new ObjectOutputStream(clientSocket.getOutputStream()); //Send stuff
+			input =  new ObjectInputStream(clientSocket.getInputStream()); //receive stuff
 			System.out.println("Client connected to " + this.HostIP + " on port " + this.port);
-			//myChatWindow = new ChatWindow(NAME, output, input);
+			myChatWindow = new ChatWindow(NAME, output, input);
 
 		} catch (Exception E) {
 			E.printStackTrace();

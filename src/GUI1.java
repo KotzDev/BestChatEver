@@ -56,7 +56,7 @@ public class GUI1 extends JPanel {
         myServerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Server Click");
+                System.out.println("Starting Server in GUI1");
                 new MyServer(Integer.parseInt(serverPort), serverName).start();
             }
         });
@@ -65,7 +65,7 @@ public class GUI1 extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new MyClient("169.254.123.249", Integer.parseInt(clientPort), clientName).start();
-                System.out.println("Client Click");
+                System.out.println("Starting Client in GUI1");
             }
         });
 

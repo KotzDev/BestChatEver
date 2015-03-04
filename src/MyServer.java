@@ -88,7 +88,7 @@ public class MyServer extends Thread
 
             myChatWindow = new ChatWindow(name,output,input);
 
-            ioStream();
+            //ioStream();
 
         } catch (Exception e) {
             e.printStackTrace();
