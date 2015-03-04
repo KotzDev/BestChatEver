@@ -27,7 +27,7 @@ public class GUI2 extends JPanel implements Runnable{
     private ObjectOutputStream output;
     private String chatColor = "#000000";
     private JEditorPane chatLog;
-    private String chatLogText = "<p>this is bullshit<p>";
+    private String chatLogText = "<p>CHAT TAEM IS NAO<p>";
 
 
     /**Constructor*/
@@ -60,14 +60,15 @@ public class GUI2 extends JPanel implements Runnable{
         sendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {    //click
-                sendMsg(sendField.getText());
+//                sendMsg(sendField.getText()); //actual
+                //test only
+                recieveMsg(xmlLib.createXML(sendField.getText(),"testzor",chatColor));
             }
         });
         colorPicker.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 chatColor = xmlLib.color2HexString(JColorChooser.showDialog(null,"Pick a color", null));
-                System.out.println(chatColor);
             }
         });
         add(namelabel);
@@ -98,21 +99,35 @@ public class GUI2 extends JPanel implements Runnable{
     {
         try
         {
-            sendField.setText("");
+            sendField.setText("");  //reset chat field
             String msgToSend = xmlLib.createXML(inMsg, this.name, this.chatColor);
-            addMsgToLog(inMsg);
+            addMsgToLog(inMsg, name, chatColor);
             output.writeObject(msgToSend);
             output.flush(); //TODO check this!
-            //TODO addmsg here
         }catch(IOException ioException)
         {
             System.out.println("can't send that message");
         }
     }
-    private void addMsgToLog(String inMsg){
-        chatLogText += "<br>" + xmlLib.getLogText(inMsg, name, chatColor);
+    private void recieveMsg(String inXMLMsg){
+        if (!xmlLib.checkMsg(inXMLMsg)){
+            addMsgToLog("Broken message recieved!", "[SYSTEM]","#000000");
+
+
+        }
+        else {
+            //do usual stuff
+            addMsgToLog(xmlLib.getMsg(inXMLMsg),xmlLib.findUser(inXMLMsg), xmlLib.findColor(inXMLMsg));
+
+        }
+
+
+    }
+    private void addMsgToLog(String inMsg, String user, String inColor){
+        chatLogText += "<br>" + xmlLib.getLogText(inMsg, user, inColor);
         chatLog.setText(chatLogText);
     }
+
 
     @Override
     public void run() {

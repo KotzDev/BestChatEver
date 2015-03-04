@@ -1,21 +1,15 @@
 import java.awt.*;
 
-/**Simple XML parsing stuff, all static for now*/
+/**Simple XML parsing stuff, all static*/
 public class xmlLib {
-    public static void main(String[] args){
-        showMsg(createXML("hej! såhär ser en XML tagg ut: <tag></tag>", "din mamma", "#RRGGBB"));
 
-    }
-    /**Shows the actual message text*/
-    public static void showMsg(final String XMLmsgIn){
+    /**Get the actual message text*/
+    public static String getMsg(final String XMLmsgIn){
         int textStart = XMLmsgIn.indexOf("<text");
         String msgText = XMLmsgIn.substring(XMLmsgIn.indexOf("<text"));
-        msgText = msgText.substring(msgText.indexOf(">")+1, msgText.indexOf("</text"));
+        msgText = msgText.substring(msgText.indexOf(">")+2, msgText.indexOf("</text")-2);
         msgText = recoverXMLchars(msgText);     //puts XML syntax back into the msg text
-        String color = findColor(XMLmsgIn);
-        //TODO use color here later for real display awesomeness!
-        System.out.println(findUser(XMLmsgIn) + " says: " + msgText);
-
+        return msgText;
 
     }
     /**Finds username*/
@@ -45,11 +39,11 @@ public class xmlLib {
         msgIn = msgIn.replaceAll("&quot;", "\"");
 
         return msgIn;
-
     }
     /**Checks if the message root tag is ok*/
     public static boolean checkMsg(String inMsg){
         return inMsg.startsWith("<message") && inMsg.endsWith("</message>");
+        //TODO check for broken tags, not only start
     }
 
     /**Replaces xml syntax in msg text*/
@@ -72,7 +66,7 @@ public class xmlLib {
         String logText = "<br/><p>" + name + ":" +
                 "<font color=\"" + color + "\">" +
                 "<br/>" + inMsg + "</font></p>";
-        System.out.println(logText);
+        //System.out.println(logText);
         return logText;
     }
     public static String color2HexString(Color color) {
