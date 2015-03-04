@@ -34,10 +34,13 @@ public class MyClient extends Thread {
 			input =  new ObjectInputStream(clientSocket.getInputStream()); //Stream for receiving stuff
 			System.out.println("Client connected to " + this.HostIP + " on port " + this.port);
 			myChatWindow = new ChatWindow(this.name, output, input);
-
-		} catch (Exception E) {
-			E.printStackTrace();
-			System.out.println("Something went wrong in the run method located in MyClient");
+		} catch (UnknownHostException e) {
+			System.err.println("Don't know about host.\n" + e);
+			System.exit(1);
+		} catch (IOException e) {
+			System.err.println("Couldn't get I/O for "
+					+ "the connection to host.\n" + e);
+			System.exit(1);
 		}
 	}
 }
