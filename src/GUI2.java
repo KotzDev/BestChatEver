@@ -18,7 +18,6 @@ public class GUI2 extends JPanel implements Runnable{
     private JButton sendButton;
     private JButton colorPicker;
     private JTextField sendField;
-    private JTextArea myTextArea;
     private JScrollPane myScrollpane;
     private String msg;
     private JLabel namelabel;
@@ -45,6 +44,7 @@ public class GUI2 extends JPanel implements Runnable{
         chatLog = new JEditorPane();
         chatLog.setPreferredSize(new Dimension(350, 350));
         chatLog.setContentType("text/html");
+        chatLog.setAutoscrolls(true);
         add(new JScrollPane(chatLog));
         chatLog.setText(chatLogText);
 
@@ -57,8 +57,8 @@ public class GUI2 extends JPanel implements Runnable{
             public void actionPerformed(ActionEvent e) {
                 msg = sendField.getText();
                 sendField.setText("");
-                chatLog.setText(msg + newline);
-                myTextArea.append(msg + newline);
+                chatLogText += "<br>" + msg + newline;
+                chatLog.setText(chatLogText);
 
                 //TODO: Nu ska den skicka till XMLlib
                 //TODO: sen får vi tillbaka något från XMLLib som lagras
@@ -104,7 +104,6 @@ public class GUI2 extends JPanel implements Runnable{
             {
                 try
                 {
-
                     message = (String) input.readObject();
                     if(message != null) {
                         System.out.println("We just receieved: " + message);
