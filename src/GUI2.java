@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -24,8 +23,8 @@ public class GUI2 extends JPanel implements Runnable{
     private String name;
     private String chatLogText = "<html><body><p>Chat Time!<p>";
     //IOSTREAMS
-    private ObjectInputStream input;
-    private ObjectOutputStream output;
+    public ObjectInputStream input;
+    public ObjectOutputStream output;
 
 
     /**The GUI2 Constructor*/
@@ -95,6 +94,8 @@ public class GUI2 extends JPanel implements Runnable{
         add(colorPicker);
         add(sendButton);
         add(disconnectButton);
+
+
     }
     private void whileChatting()throws IOException {
         String message = "You are now connected";
@@ -112,7 +113,7 @@ public class GUI2 extends JPanel implements Runnable{
         }while(!message.equals(null));
     }
 
-    private void sendMsg(String inMsg)
+    public void sendMsg(String inMsg)
     {
         try
         {
@@ -135,7 +136,6 @@ public class GUI2 extends JPanel implements Runnable{
             addMsgToLog(xmlLib.getMsg(inXMLMsg),xmlLib.findUser(inXMLMsg), xmlLib.findColor(inXMLMsg));
         }
 
-
     }
     private void addMsgToLog(String inMsg, String user, String inColor){
         chatLogText += "<br>" + xmlLib.getLogText(inMsg, user, inColor);
@@ -145,7 +145,6 @@ public class GUI2 extends JPanel implements Runnable{
 
         //chatLog.setCaret(chatLog.);   //scroll bs
     }
-
 
     @Override
     public void run() {
@@ -157,4 +156,5 @@ public class GUI2 extends JPanel implements Runnable{
             e.printStackTrace();
         }
     }
+
 }
