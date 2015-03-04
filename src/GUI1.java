@@ -64,39 +64,15 @@ public class GUI1 extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 getInfo();
                 System.out.println("Starting Client in GUI1, username: " + clientName);
-                new MyClient("169.254.123.249", Integer.parseInt(clientPort), clientName).start();
+                new MyClient(hostIP, Integer.parseInt(clientPort), clientName).start();
             }
         });
 
         serverPortField = new JTextField(8);
-        /*serverPortField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                serverPort = serverPortField.getText();
-            }
-        });*/
         clientPortField = new JTextField(8);
-        /*clientPortField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                clientPort = clientPortField.getText();
-            }
-        });*/
         serverNameField = new JTextField(8);
-        /*serverNameField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                serverName = serverNameField.getText();
-            }
-        });*/
         clientNameField = new JTextField(8);
-        /*clientNameField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                clientName = clientNameField.getText();
-            }
-        });*/
-
+        hostIPField = new JTextField(8);
 
         serverPortLabel = new JLabel();
         serverPortLabel.setText("Incoming Port");
@@ -105,27 +81,15 @@ public class GUI1 extends JPanel {
         serverNameLabel = new JLabel();
         serverNameLabel.setText("Server Name");
         clientNameLabel = new JLabel();
+        hostIPLabel = new JLabel("Enter IP");
+
         clientNameLabel.setText("Client Name");
         clientNameLabel.setText("Client Name");
         serverNameField.setText("serverlol");
         serverPortField.setText("5000");
         clientNameField.setText("clientlol");
         clientPortField.setText("5000");
-/*
-        console = new JTextArea();
-        console.setColumns(10);
-        console.setRows(10);
-        console.setLineWrap(true);
-        console.setWrapStyleWord(true);
-        console.setEditable(false);
-        consoleScrollPane = new JScrollPane(console);
-
-        try {
-            console.read(new InputStreamReader(System.in), null);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-*/
+        hostIPField.setText("169.254.123.249");
 
         add(myServerButton);
         add(serverNameLabel);
@@ -138,8 +102,9 @@ public class GUI1 extends JPanel {
         add(clientNameField);
         add(clientPortLabel);
         add(clientPortField);
+        add(hostIPLabel);
+        add(hostIPField);
 
-        //add(console);
 
 
     }//End of constructor
@@ -153,6 +118,7 @@ public class GUI1 extends JPanel {
         clientPort = clientPortField.getText();
         serverName = serverNameField.getText();
         clientName = clientNameField.getText();
+        hostIP = hostIPField.getText();
     }
     public void checkBoxes()
     {
